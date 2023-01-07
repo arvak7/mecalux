@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:file:/data/demo
+    username: sa
+    password: ${DB_PASSWORD:mreus}
+    driverClassName: org.h2.Driver
+  flyway:
+    enabled: true
+  jpa:
+    hibernate.ddl-auto: none
+    show-sql: true
+
+
