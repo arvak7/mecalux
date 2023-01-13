@@ -1,4 +1,6 @@
 server:
+  error:
+    include-stacktrace: never
   port: 8080
   compression:
     enabled: true
