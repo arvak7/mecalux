@@ -3,6 +3,7 @@ package com.mecalux.prueba.common.exception;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -46,10 +47,23 @@ public class RestExceptionHandler {
         return buildErrorResponse(exception, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ResponseEntity<String> handleInvalidFormatException(HttpMessageNotReadableException exception) {
+        log.error("Runtime exception: ", exception);
+        return buildErrorMessage("This is not a valid field: " + exception.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     private ResponseEntity<String> buildErrorResponse(Exception exception, HttpStatus httpStatus) {
         return ResponseEntity
                 .status(httpStatus)
                 .body(String.format("Message error: %s", exception.getMessage()));
+    }
+
+    private ResponseEntity<String> buildErrorMessage(String message, HttpStatus httpStatus) {
+        return ResponseEntity
+                .status(httpStatus)
+                .body(String.format("Message error: %s", message));
     }
 
     private ResponseEntity<List<String>> buildValidationErrorResponse(List<String> errors) {

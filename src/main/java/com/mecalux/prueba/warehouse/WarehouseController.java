@@ -30,10 +30,9 @@ public class WarehouseController {
     @Nonnull
     @PostMapping
     @Timed(value = "warehouse.post.time", description = "time to create a new warehouse", percentiles = {0.5, 0.9})
-    protected ResponseEntity<String> create(@Valid @RequestBody WarehouseDto warehouseDto) {
+    protected ResponseEntity<Warehouse> create(@Valid @RequestBody WarehouseDto warehouseDto) {
         Optional<Warehouse> warehouse = warehouseService.createWarehouse(warehouseDto);
-        return ResponseEntity.ok().body(String.format("Your Warehouse of family %s with uuid %s is created", warehouse
-                .orElseThrow(NotFoundException::new).getFamily(), warehouse.orElseThrow(NotFoundException::new).getUuid()));
+        return ResponseEntity.ok().body(warehouse.orElseThrow(NotFoundException::new));
     }
 
     @Nonnull
@@ -46,10 +45,9 @@ public class WarehouseController {
     @Nonnull
     @PutMapping
     @Timed(value = "warehouse.post.time", description = "time to create a new warehouse", percentiles = {0.5, 0.9})
-    protected ResponseEntity<String> update(@Valid @RequestBody WarehouseDto warehouseDto) {
+    protected ResponseEntity<Warehouse> update(@Valid @RequestBody WarehouseDto warehouseDto) {
         Optional<Warehouse> warehouse = warehouseService.updateWarehouse(warehouseDto);
-        return ResponseEntity.ok().body(String.format("Your Warehouse of family %s with uuid %s is updated", warehouse
-                .orElseThrow(NotFoundException::new).getFamily(), warehouse.orElseThrow(NotFoundException::new).getUuid()));
+        return ResponseEntity.ok().body(warehouse.orElseThrow(NotFoundException::new));
     }
 
 

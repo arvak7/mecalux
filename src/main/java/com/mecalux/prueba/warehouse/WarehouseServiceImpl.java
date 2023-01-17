@@ -18,7 +18,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public Optional<Warehouse> createWarehouse(WarehouseDto warehouseDto) {
         warehouseHelper.validateNotExistUuid(warehouseDto);
-        return Optional.of(warehouseHelper.create(warehouseDto));
+        Warehouse warehouse = warehouseHelper.convertDtoToEntity(warehouseHelper.generateUUID(warehouseDto));
+        warehouse = warehouseHelper.addRacksIfAreValidated(warehouseDto, warehouse);
+        return Optional.of(warehouseHelper.create(warehouse));
     }
 
     @Override
@@ -29,7 +31,9 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public Optional<Warehouse> updateWarehouse(WarehouseDto warehouseDto) {
         Integer idByUuid = warehouseHelper.findIdByUuid(warehouseDto.getUuid());
-        return Optional.of(warehouseHelper.update(warehouseDto, idByUuid));
+        Warehouse warehouse = warehouseHelper.convertDtoToEntity(warehouseDto);
+        warehouse = warehouseHelper.addRacksIfAreValidated(warehouseDto, warehouse);
+        return Optional.of(warehouseHelper.update(warehouse, idByUuid));
     }
 
     @Override

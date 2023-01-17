@@ -1,15 +1,12 @@
 package com.mecalux.prueba.warehouse;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.mecalux.prueba.common.base.Family;
+import com.mecalux.prueba.rack.Rack;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Set;
 import java.util.UUID;
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -31,10 +28,13 @@ public class Warehouse {
     private String client;
     @Basic
     @Column(name = "FAMILY")
-    private String family;
+    private Family family;
     @Basic
     @Column(name = "SIZE")
     private Integer size;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
+    @JoinColumn(name = "warehouse_id")
+    private Set<Rack> racks;
 
 
 }

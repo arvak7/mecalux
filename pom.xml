@@ -73,11 +73,6 @@
 			<artifactId>jsr305</artifactId>
 			<version>3.0.2</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>net.sf.dozer</groupId>-->
-<!--			<artifactId>dozer-spring</artifactId>-->
-<!--			<version>5.5.1</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
