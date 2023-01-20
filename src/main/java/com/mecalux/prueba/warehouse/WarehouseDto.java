@@ -1,8 +1,6 @@
 package com.mecalux.prueba.warehouse;
 
-import com.mecalux.prueba.common.base.Family;
-import com.mecalux.prueba.common.base.Racks;
-import com.mecalux.prueba.common.validate.ValidateFamily;
+import com.mecalux.prueba.common.validate.family.ValidateFamily;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -13,8 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -34,5 +31,5 @@ public class WarehouseDto {
     @Max(value = 99, message = "{validation.size.max}")
     @NotNull
     private Integer size;
-    private Set<String> racks;
+    private List<String> racks;
 }

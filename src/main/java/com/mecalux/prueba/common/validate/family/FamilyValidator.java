@@ -1,4 +1,4 @@
-package com.mecalux.prueba.common.validate;
+package com.mecalux.prueba.common.validate.family;
 
 import com.mecalux.prueba.common.base.Family;
 import jakarta.validation.ConstraintValidator;
@@ -21,9 +21,7 @@ public class FamilyValidator implements ConstraintValidator<ValidateFamily, Stri
         for (Family family : Family.values()) {
             if (family.toString().equals(value)) {
                 exist = true;
-                if (exist) {
-                    break;
-                }
+                break;
             }
         }
         return exist;

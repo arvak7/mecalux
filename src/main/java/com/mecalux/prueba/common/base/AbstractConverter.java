@@ -14,7 +14,7 @@ public abstract class AbstractConverter<T, V> implements Converter<T, V> {
     private final Class<T> tClazz;
     private final Class<V> vClazz;
 
-    public AbstractConverter(Mapper mapper, Class<T> tClazz, Class<V> vClazz) {
+    protected AbstractConverter(Mapper mapper, Class<T> tClazz, Class<V> vClazz) {
         this.mapper = mapper;
         this.tClazz = tClazz;
         this.vClazz = vClazz;

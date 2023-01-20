@@ -1,4 +1,4 @@
-package com.mecalux.prueba.common.validate;
+package com.mecalux.prueba.common.validate.family;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
