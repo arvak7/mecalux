@@ -94,7 +94,7 @@ public class MockIntegrationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size").value(5));
 
         // Delete
-        ResultActions resultDelete = mockMvc.perform(delete(WAREHOUSE_ENDPOINT)
+        mockMvc.perform(delete(WAREHOUSE_ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("uuid", warehouseCreated.getUuid().toString()))
                 .andExpect(status().isOk())
