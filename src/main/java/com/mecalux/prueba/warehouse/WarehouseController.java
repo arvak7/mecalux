@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,6 +41,13 @@ public class WarehouseController {
     @Timed(value = "warehouse.read.time", description = "time to read a new warehouse", percentiles = {0.5, 0.9})
     protected ResponseEntity<Warehouse> read(@RequestParam UUID uuid) {
         return ResponseEntity.ok().body(warehouseService.readWarehouse(uuid).orElseThrow(NotFoundException::new));
+    }
+
+    @Nonnull
+    @GetMapping("all")
+    @Timed(value = "warehouse.read.time", description = "time to read a new warehouse", percentiles = {0.5, 0.9})
+    protected ResponseEntity<List<Warehouse>> readAll() {
+        return ResponseEntity.ok().body(warehouseService.findAll().orElseThrow(NotFoundException::new));
     }
 
     @Nonnull

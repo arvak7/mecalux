@@ -66,6 +66,10 @@ public class WarehouseHelper {
         return warehouseByUuid.getId();
     }
 
+    protected List<Warehouse> findAll() {
+        return warehouseRepository.findAll();
+    }
+
     protected Warehouse addRacksIfAreValidated(@NotNull WarehouseDto warehouseDto, @NotNull Warehouse warehouse) {
         List<Rack> racks = new ArrayList<>();
         if (!CollectionUtils.isEmpty(warehouseDto.getRacks())) {

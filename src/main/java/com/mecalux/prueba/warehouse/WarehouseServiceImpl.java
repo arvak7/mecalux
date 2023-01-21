@@ -3,6 +3,7 @@ package com.mecalux.prueba.warehouse;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,5 +41,10 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Boolean deleteWarehouse(UUID uuid) {
         Integer idByUuid = warehouseHelper.findIdByUuid(uuid);
         return warehouseHelper.delete(idByUuid);
+    }
+
+    @Override
+    public Optional<List<Warehouse>> findAll() {
+        return Optional.ofNullable(warehouseHelper.findAll());
     }
 }
