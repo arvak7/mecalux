@@ -1,50 +1,40 @@
 package com.mecalux.prueba.permutation;
 
 import com.mecalux.prueba.common.base.Family;
+import com.mecalux.prueba.common.base.Racks;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PermutationServiceImpl implements PermutationService {
 
     @Override
-    public Set<String> calculatePermutationsByFamily(Family family) {
-        return findPermutations(family.getRacks().stream().map(Enum::toString).collect(Collectors.joining()));
-    }
+    public List<String> calculatePermutationsByFamily(Family family, int k) {
+        List<String> permutations = new ArrayList<>();
 
-    private static void swap(char[] chars, int i, int j) {
-        char temp = chars[i];
-        chars[i] = chars[j];
-        chars[j] = temp;
-    }
-
-    // Función recursiva para generar todas las permutaciones de una string
-    private Set<String> permutations(char[] chars, int currentIndex, Set<String> permutations) {
-        if (currentIndex == chars.length - 1) {
-            permutations.add(String.valueOf(chars));
+        List<Racks> racksList = family.getRacks();
+        char[] elements = new char[racksList.size()];
+        for (int i = 0; i < racksList.size(); i++) {
+            elements[i] = racksList.get(i).name().charAt(0);
         }
 
-        for (int i = currentIndex; i < chars.length; i++) {
-            swap(chars, currentIndex, i);
-            permutations(chars, currentIndex + 1, permutations);
-            swap(chars, currentIndex, i);
-        }
-
+        permuteWithRepetition(elements, "", elements.length, k, permutations);
         return permutations;
     }
 
-    private Set<String> findPermutations(String str) {
-        // caso base
-        Set<String> permutations = new HashSet<>();
-        if (str == null || str.length() == 0) {
-            return permutations;
+    private static void permuteWithRepetition(char[] elements, String prefix, int n, int k, List<String> permutations) {
+        if (k == 0) {
+            permutations.add(prefix);
+            return;
         }
 
-        return permutations(str.toCharArray(), 0, permutations);
-
+        for (int i = 0; i < n; i++) {
+            permuteWithRepetition(elements, prefix + elements[i], n, k - 1, permutations);
+        }
     }
-
 }
+
+
+

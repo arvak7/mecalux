@@ -7,8 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,28 +25,24 @@ class PermutationServiceTest {
     @Test
     void testNumberOfElementsMatch() {
         Family family = Family.ROB;
-        int size = permutationService.calculatePermutationsByFamily(family).size();
-        assertThat(size).isEqualTo(calcFactorial(family.getRacks().size()));
+        int size = permutationService.calculatePermutationsByFamily(family, 3).size();
+        assertThat(size).isEqualTo(calcPow(family.getRacks().size(), 3));
     }
 
     @Test
     void testElementsMatch() {
         Family family = Family.EST;
-        Set<String> permutations = permutationService.calculatePermutationsByFamily(family);
-        Set<String> expectedPermutations = createSampleExpectedPermutations();
-        assertThat(Stream.of(permutations, expectedPermutations).flatMap(Set::stream).distinct().anyMatch(expectedPermutations::contains)).isTrue();
+        List<String> permutations = permutationService.calculatePermutationsByFamily(family, 3);
+        List<String> expectedPermutations = createSampleExpectedPermutations();
+        assertThat(Stream.of(permutations, expectedPermutations).flatMap(List::stream).distinct().anyMatch(expectedPermutations::contains)).isTrue();
     }
 
-    private Set<String> createSampleExpectedPermutations() {
-        return new HashSet<>(Arrays.asList("ABC","ACB","BAC","BCA","CAB","CBA"));
+    private List<String> createSampleExpectedPermutations() {
+        return Arrays.asList("AAA","AAB","AAC","ABA","ABB","ABC","ACA","ACB","ACC","BAA","BAB","BAC","BBA","BBB","BBC","BCA","BCB","BCC","CAA","CAB","CAC","CBA","CBB","CBC","CCA","CCB","CCC");
     }
 
-    private int calcFactorial(int num) {
-        int factorial=1;
-        for (int i = num; i > 0; i--) {
-            factorial = factorial * i;
-        }
-        return factorial;
+    private int calcPow(int n, int k) {
+        return (int) Math.pow(n, k);
     }
 
 }
