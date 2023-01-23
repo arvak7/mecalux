@@ -8,14 +8,14 @@ import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/permutation")
+@RequestMapping("/api/v1/permutations")
 @Tag(name = "Permutation")
 @RequiredArgsConstructor
 public class PermutationController {
@@ -23,10 +23,10 @@ public class PermutationController {
     private final PermutationService permutationService;
 
     @Nonnull
-    @GetMapping
+    @GetMapping("/{family}/{k}")
     @Timed(value = "permutations.read.time", description = "time to read a new permutation", percentiles = {0.5, 0.9})
-    protected ResponseEntity<Set<String>> calcPermutations(@RequestParam @ValidateFamily Family family) {
-        return ResponseEntity.ok().body(permutationService.calculatePermutationsByFamily(family));
+    protected ResponseEntity<List<String>> calcPermutations(@PathVariable @ValidateFamily Family family, @PathVariable int k) {
+        return ResponseEntity.ok().body(permutationService.calculatePermutationsByFamily(family, k));
     }
 
 }

@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/rack")
+@RequestMapping("/api/v1/racks")
 @Tag(name = "rack")
 @RequiredArgsConstructor
 public class RackController {
