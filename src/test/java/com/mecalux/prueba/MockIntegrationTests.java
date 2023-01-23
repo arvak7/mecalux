@@ -38,7 +38,7 @@ public class MockIntegrationTests {
 
     private static final String CLIENT_TEST_1 = "clientTest1";
     private static final List<String> CORRECT_RACKS_FOR_ROB_FAMILY = Arrays.asList(Racks.A.toString(), Racks.D.toString(), Racks.C.toString());
-    private static final String WAREHOUSE_ENDPOINT = "/api/v1/warehouse";
+    private static final String WAREHOUSE_ENDPOINT = "/api/v1/warehouses";
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -74,9 +74,9 @@ public class MockIntegrationTests {
         assertThat(warehouseCreated.getRacks()).isNotEmpty();
 
         // Read
-        ResultActions resultRead = mockMvc.perform(get(WAREHOUSE_ENDPOINT)
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("uuid", warehouseCreated.getUuid().toString()));
+        ResultActions resultRead = mockMvc.perform(get(WAREHOUSE_ENDPOINT.concat("/").concat(warehouseCreated.getUuid().toString()))
+                .contentType(MediaType.APPLICATION_JSON));
+//                .param("uuid", warehouseCreated.getUuid().toString()));
         resultRead.andExpect(status().isOk());
         resultRead.andExpect(MockMvcResultMatchers.jsonPath("$.client").value(CLIENT_TEST_1));
 
@@ -94,9 +94,8 @@ public class MockIntegrationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size").value(5));
 
         // Delete
-        mockMvc.perform(delete(WAREHOUSE_ENDPOINT)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .param("uuid", warehouseCreated.getUuid().toString()))
+        mockMvc.perform(delete(WAREHOUSE_ENDPOINT.concat("/").concat(warehouseCreated.getUuid().toString()))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value(String.format("Your Warehouse with uuid %s has been deleted", warehouseCreated.getUuid().toString())));
 
